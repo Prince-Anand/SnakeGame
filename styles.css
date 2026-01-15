@@ -75,3 +75,29 @@ main{
 .snake{
     background-color: limegreen;
 }
+.aboveall{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(250, 235, 215, 0.256);
+    backdrop-filter: blur(8px);
+
+}
+.over-lay{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+
+    /* z-index: 22; */
+    /* color: aliceblue; */
+}
+#start:hover , #restart:hover{
+    cursor: pointer;
+
+}
