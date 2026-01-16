@@ -1,3 +1,4 @@
+const scorebox = document.querySelector(".curr-score");
 const t = document.querySelector(".time");
 let direction = "right";
 const Game = () => {
@@ -50,7 +51,6 @@ const Game = () => {
 
     }, 1000);
   // const foodBox = document.createElement("div");
-
   function render() {
     for (let i = 0; i < rows; i++) {
       boxArray[i] = [];
@@ -134,6 +134,8 @@ const Game = () => {
       clearInterval(timeIntervalId);
       rebtn.style.display = "block";
       rebtn.onclick = () => {
+        scorebox.innerText="Score: 0";
+        t.innerText = "Time: 00:00"
         startScreen.style.display = "none";
         Game();
       };
@@ -147,7 +149,6 @@ const Game = () => {
     if (head.x == food.x && head.y == food.y) {
       score++;
       generateFood();
-      const scorebox = document.querySelector(".curr-score");
       scorebox.innerText = `Score: ${score}`;
     } else {
       // remove last element only when snake doesnt eat food
