@@ -1,4 +1,7 @@
+const t = document.querySelector(".time");
+let direction = "right";
 const Game = () => {
+  direction="right";
   const boxWidth = 32;
   const boxHeight = 32;
   const board = document.querySelector(".game-area");
@@ -12,13 +15,15 @@ const Game = () => {
     y: Math.floor(Math.random() * rows),
   };
 
-  let direction = "right";
+
+
   let boxArray = [];
   let score = 0;
   let highScore = Number(localStorage.getItem("highScore")) || 0;
   const highScoreBox = document.querySelector(".high-score");
   highScoreBox.innerText = `High Score: ${highScore}`;
-  let time = "00:00";
+  let min = 0;
+  let sec = 0;
 
   let snake = [
     {
@@ -35,6 +40,15 @@ const Game = () => {
     },
   ];
 
+  const timeIntervalId = setInterval(() => {
+      sec++;
+      if (sec === 60){
+        min++;
+        sec=0;
+      }
+      t.innerText = `Time: ${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`
+
+    }, 1000);
   // const foodBox = document.createElement("div");
 
   function render() {
@@ -53,8 +67,9 @@ const Game = () => {
       }
     }
 
-    console.log(boxArray);
+    // console.log(boxArray);
   }
+  board.innerHTML="";
   render();
   function generateFood() {
     boxArray[food.y][food.x].classList.remove("food");
@@ -85,6 +100,7 @@ const Game = () => {
 
   let head = null;
   const intervalId = setInterval(() => {
+    
     // snake.forEach((ele) => {
     //   boxArray[ele.y][ele.x].classList.add("snake");
     // });
@@ -115,11 +131,12 @@ const Game = () => {
       const startScreen = document.querySelector(".aboveall");
       startScreen.style.display = "flex";
       btn.style.display = "none";
+      clearInterval(timeIntervalId);
       rebtn.style.display = "block";
-      rebtn.addEventListener("click", () => {
+      rebtn.onclick = () => {
         startScreen.style.display = "none";
         Game();
-      });
+      };
 
       clearInterval(intervalId);
       return;
@@ -147,23 +164,24 @@ const Game = () => {
     }
   }, 300);
 
-  /* Direction Change */
-  document.addEventListener("keydown", (e) => {
-    console.log(e.key);
-    if (e.key == "ArrowUp" && direction != "down") {
-      direction = "up";
-    } else if (e.key == "ArrowLeft" && direction != "right") {
-      direction = "left";
-    } else if (e.key == "ArrowRight" && direction != "left") {
-      direction = "right";
-    } else if (e.key == "ArrowDown" && direction != "up") {
-      direction = "down";
-    }
-  });
 };
+/* Direction Change */
+document.addEventListener("keydown", (e) => {
+  // console.log(e.key);
+  if (e.key == "ArrowUp" && direction != "down") {
+    direction = "up";
+  } else if (e.key == "ArrowLeft" && direction != "right") {
+    direction = "left";
+  } else if (e.key == "ArrowRight" && direction != "left") {
+    direction = "right";
+  } else if (e.key == "ArrowDown" && direction != "up") {
+    direction = "down";
+  }
+});
 const btn = document.getElementById("start");
 btn.addEventListener("click", () => {
   const startScreen = document.querySelector(".aboveall");
   startScreen.style.display = "none";
   Game();
+  
 });
